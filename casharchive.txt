@@ -1,0 +1,373 @@
+Imports System.Data.Common
+Imports System.Data.OleDb
+Imports System.Diagnostics.Eventing.Reader
+Public Class Casharchive
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        Me.Hide()
+
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Casharchive_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        RadioButton1.Checked = True
+        Dim cn As New OleDb.OleDbConnection
+        Dim cmd As New OleDb.OleDbCommand
+        Dim dt As New DataTable
+        Dim da As New OleDb.OleDbDataAdapter
+        cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+        cn.Open()
+        cmd.Connection = cn
+        da = New OleDb.OleDbDataAdapter("select * from JHAT2 where Année ='" & Today.Year & "' and Mois ='" & Today.Month & "'and Jour ='" & Today.Day & "'", cn)
+        da.Fill(dt)
+        DataGridView1.DataSource = dt
+        Label8.Visible = False
+
+    End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.Hide()
+
+    End Sub
+
+    Private Sub btnstop3_Click(sender As Object, e As EventArgs) Handles btnstop3.Click
+        Label9.Hide()
+
+        If RadioButton1.Checked = True Then
+            If ComboBox1.Text <> "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from MAAT2 where Mois ='" & ComboBox1.Text & "' and Année ='" & ComboBox2.Text & "'", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            ElseIf ComboBox1.Text = "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from AAT2 where Année ='" & ComboBox2.Text & "'  ", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            Else
+                Label8.Visible = True
+            End If
+        ElseIf RadioButton2.Checked = True Then
+            TextBox1.Text = "4"
+            If ComboBox1.Text <> "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from MADF2 where Mois ='" & ComboBox1.Text & "' and Année ='" & ComboBox2.Text & "'and Table ='" & TextBox1.Text & "'", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            ElseIf ComboBox1.Text = "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from ADF2 where Année ='" & ComboBox2.Text & "' and Table ='" & TextBox1.Text & "' ", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            Else
+                Label8.Visible = True
+            End If
+
+
+        ElseIf RadioButton3.Checked = True Then
+            TextBox1.Text = "3"
+            If ComboBox1.Text <> "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from MADF2 where Mois ='" & ComboBox1.Text & "' and Année ='" & ComboBox2.Text & "'and Table ='" & TextBox1.Text & "'", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            ElseIf ComboBox1.Text = "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from ADF2 where Année ='" & ComboBox2.Text & "' and Table ='" & TextBox1.Text & "' ", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            Else
+                Label8.Visible = True
+            End If
+
+        ElseIf RadioButton4.Checked = True Then
+            TextBox1.Text = "2"
+            If ComboBox1.Text <> "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from MADF2 where Mois ='" & ComboBox1.Text & "' and Année ='" & ComboBox2.Text & "'and Table ='" & TextBox1.Text & "'", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            ElseIf ComboBox1.Text = "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from ADF2 where Année ='" & ComboBox2.Text & "' and Table ='" & TextBox1.Text & "' ", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            Else
+                Label8.Visible = True
+            End If
+
+        ElseIf RadioButton5.Checked = True Then
+            TextBox1.Text = "1"
+            If ComboBox1.Text <> "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from MADF2 where Mois ='" & ComboBox1.Text & "' and Année ='" & ComboBox2.Text & "'and Table ='" & TextBox1.Text & "'", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            ElseIf ComboBox1.Text = "" And ComboBox2.Text <> "" Then
+                ComboBox3.Text = ""
+                Dim cn As New OleDb.OleDbConnection
+                Dim cmd As New OleDb.OleDbCommand
+                Dim dt As New DataTable
+                Dim da As New OleDb.OleDbDataAdapter
+                cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+                cn.Open()
+                cmd.Connection = cn
+                da = New OleDb.OleDbDataAdapter("select * from ADF2 where Année ='" & ComboBox2.Text & "' and Table ='" & TextBox1.Text & "' ", cn)
+                da.Fill(dt)
+                DataGridView1.DataSource = dt
+                Label8.Visible = False
+            Else
+                Label8.Visible = True
+            End If
+
+
+        End If
+        If DataGridView1.CurrentCell Is Nothing Then
+            Dim Ask As MsgBoxResult = MsgBox("No data corresponds to this date ! ", MsgBoxStyle.Information, "Alerte")
+
+        End If
+
+
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If CheckBox1.Checked = True Then
+            Button2.Enabled = True
+            DateTimePicker1.Enabled = True
+            ComboBox3.Enabled = True
+        Else
+            Button2.Enabled = False
+            DateTimePicker1.Enabled = False
+            ComboBox3.Enabled = False
+        End If
+    End Sub
+
+    Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged
+        Label9.Hide()
+        If RadioButton1.Checked = True Then
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton2.Checked = True Then
+            TextBox1.Text = "4"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton5.Checked = True Then
+            TextBox1.Text = "1"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton4.Checked = True Then
+            TextBox1.Text = "2"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton3.Checked = True Then
+            TextBox1.Text = "3"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+
+        End If
+
+        If DataGridView1.CurrentCell Is Nothing Then
+            Dim Ask As MsgBoxResult = MsgBox("No data corresponds to this date ! ", MsgBoxStyle.Information, "Alerte")
+        End If
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Label9.Hide()
+        If RadioButton1.Checked = True Then
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JHAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "'and Heure ='" & ComboBox3.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton2.Checked = True Then
+            TextBox1.Text = "4"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JHAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "'and Heure ='" & ComboBox3.Text & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton3.Checked = True Then
+            TextBox1.Text = "3"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JHAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "'and Heure ='" & ComboBox3.Text & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton4.Checked = True Then
+            TextBox1.Text = "2"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JHAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "'and Heure ='" & ComboBox3.Text & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+        ElseIf RadioButton5.Checked = True Then
+            TextBox1.Text = "1"
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            Dim dt As New DataTable
+            Dim da As New OleDb.OleDbDataAdapter
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            da = New OleDb.OleDbDataAdapter("select * from JHAT2 where Année ='" & DateTimePicker1.Value.Year & "' and Mois ='" & DateTimePicker1.Value.Month & "'and Jour ='" & DateTimePicker1.Value.Day & "'and Heure ='" & ComboBox3.Text & "' and Table ='" & TextBox1.Text & "'", cn)
+            da.Fill(dt)
+            DataGridView1.DataSource = dt
+            Label8.Visible = False
+
+        End If
+
+        If DataGridView1.CurrentCell Is Nothing Then
+            Dim Ask As MsgBoxResult = MsgBox("No data corresponds to this date ! ", MsgBoxStyle.Information, "Alerte")
+        End If
+    End Sub
+
+
+
+
+End Class

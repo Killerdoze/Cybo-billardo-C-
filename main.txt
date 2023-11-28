@@ -1,0 +1,675 @@
+Imports System.Data.OleDb
+
+Public Class main
+    Dim time1 As Integer = 0
+    Dim time2 As Integer = 0
+    Dim time3 As Integer = 0
+    Dim time4 As Integer = 0
+    Dim s1 As Decimal
+    Dim s2 As Decimal
+    Dim s3 As Decimal
+    Dim s4 As Decimal
+    Dim somme As Decimal
+    Private Sub main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Timer5.Start()
+        Label9.Text = Today
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        End
+
+    End Sub
+
+    Private Sub ToolStripMenuItem1_MouseMove(sender As Object, e As MouseEventArgs) Handles ToolStripMenuItem1.MouseMove
+        ToolStripMenuItem1.ForeColor = Color.Black
+    End Sub
+
+    Private Sub TableArchiveToolStripMenuItem_MouseLeave(sender As Object, e As EventArgs) Handles TableArchiveToolStripMenuItem.MouseLeave
+        ToolStripMenuItem1.ForeColor = Color.White
+    End Sub
+
+    Private Sub TableArchiveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TableArchiveToolStripMenuItem.Click
+        Archivetable.Show()
+        ToolStripMenuItem1.ForeColor = Color.Black
+    End Sub
+
+    Private Sub SdToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SdToolStripMenuItem.Click
+        Me.Enabled = False
+        About.Show()
+    End Sub
+
+    Private Sub Bntstart1_Click(sender As Object, e As EventArgs) Handles bntstart1.Click
+        btncancel1.Enabled = True
+        Timer1.Start()
+        Green1.Visible = False
+        Red1.Visible = True
+        yeelow1.Visible = False
+        btncancel1.Enabled = True
+        btnstop1.Enabled = True
+        btnend1.Enabled = False
+        btnres1.Enabled = False
+        bntstart1.Enabled = False
+
+    End Sub
+
+    Private Sub btnstop1_Click(sender As Object, e As EventArgs) Handles btnstop1.Click
+        Timer1.Stop()
+        yeelow1.Visible = True
+        Green1.Visible = False
+        Red1.Visible = False
+        btnres1.Enabled = True
+        btnend1.Enabled = True
+        btnstop1.Enabled = False
+        bntstart1.Enabled = True
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        time1 = time1 + 1
+        Dim heures As Integer = time1 \ 3600
+        Dim minutes As Integer = (time1 Mod 3600) \ 60
+        Dim secondes As Integer = (time1 Mod 3600) Mod 60
+        lblh1.Text = heures.ToString("00")
+        lblm1.Text = minutes.ToString("00")
+        lbls1.Text = secondes.ToString("00")
+
+        If lbls1.Text = "01" Then
+            s1 = s1 + 0.15
+            lblmnt1.Text = s1
+        End If
+    End Sub
+
+    Private Sub btnend1_Click(sender As Object, e As EventArgs) Handles btnend1.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 1 to end the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label21, lblmnt1 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label21.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt1.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            btncancel1.Enabled = True
+            Green1.Visible = True
+            Red1.Visible = False
+            yeelow1.Visible = False
+            bntstart1.Enabled = True
+            btnend1.Enabled = False
+            btnres1.Enabled = False
+            lblh1.Text = "00"
+            lblm1.Text = "00"
+            lbls1.Text = "00"
+            lblmnt1.Text = "0"
+            time1 = 0
+            Timer1.Stop()
+            somme = somme + s1
+            s1 = 0
+            Label48.Text = somme
+        End If
+    End Sub
+
+    Private Sub btnres1_Click(sender As Object, e As EventArgs) Handles btnres1.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 1 to restart the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label21, lblmnt1 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label21.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt1.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            Green1.Visible = False
+            Red1.Visible = True
+            yeelow1.Visible = False
+            btnstop1.Enabled = True
+            bntstart1.Enabled = False
+            btnres1.Enabled = False
+            btnend1.Enabled = False
+            lblh1.Text = "00"
+            lblm1.Text = "00"
+            lbls1.Text = "00"
+            lblmnt1.Text = "0"
+            time1 = 0
+            Timer1.Start()
+            somme = somme + s1
+            s1 = 0
+            Label48.Text = somme
+        End If
+    End Sub
+
+    Private Sub btnstart2_Click(sender As Object, e As EventArgs) Handles btnstart2.Click
+        btncancel2.Enabled = True
+        Timer2.Start()
+        Green2.Visible = False
+        Red2.Visible = True
+        Yellow2.Visible = False
+        btncancel2.Enabled = True
+        btnstop2.Enabled = True
+        btnend2.Enabled = False
+        btnres2.Enabled = False
+        btnstart2.Enabled = False
+
+
+
+    End Sub
+
+    Private Sub PictureBox15_Click(sender As Object, e As EventArgs) Handles PictureBox15.Click
+        Label48.Visible = True
+        Label49.Visible = False
+        PictureBox15.Visible = False
+        PictureBox16.Visible = True
+    End Sub
+
+    Private Sub PictureBox16_Click(sender As Object, e As EventArgs) Handles PictureBox16.Click
+        Label48.Visible = False
+        Label49.Visible = True
+        PictureBox16.Visible = False
+        PictureBox15.Visible = True
+    End Sub
+
+    Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
+        Label48.Text = 0
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        time2 = time2 + 1
+        Dim heures As Integer = time2 \ 3600
+        Dim minutes As Integer = (time2 Mod 3600) \ 60
+        Dim secondes As Integer = (time2 Mod 3600) Mod 60
+        lblh2.Text = heures.ToString("00")
+        lblm2.Text = minutes.ToString("00")
+        lbls2.Text = secondes.ToString("00")
+
+        If lbls2.Text = "01" Then
+            s2 = s2 + 0.15
+            lblmnt2.Text = s2
+        End If
+    End Sub
+
+    Private Sub btnend2_Click(sender As Object, e As EventArgs) Handles btnend2.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 2 to end the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label22, lblmnt2 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label22.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt2.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            btncancel2.Enabled = False
+            Green2.Visible = True
+            Red2.Visible = False
+            Yellow2.Visible = False
+            btnstart2.Enabled = True
+            btnend2.Enabled = False
+            btnres2.Enabled = False
+            lblh2.Text = "00"
+            lblm2.Text = "00"
+            lbls2.Text = "00"
+            lblmnt2.Text = "0"
+            time2 = 0
+            Timer2.Stop()
+            somme = somme + s2
+            s2 = 0
+            Label48.Text = somme
+        End If
+
+    End Sub
+
+    Private Sub btnstop2_Click(sender As Object, e As EventArgs) Handles btnstop2.Click
+        Timer2.Stop()
+        Yellow2.Visible = True
+        Green2.Visible = False
+        Red2.Visible = False
+        btnres2.Enabled = True
+        btnend2.Enabled = True
+        btnstop2.Enabled = False
+        btnstart2.Enabled = True
+    End Sub
+
+    Private Sub btnres2_Click(sender As Object, e As EventArgs) Handles btnres2.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 2 to restart the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label22, lblmnt2 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label22.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt2.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            Green2.Visible = False
+            Red2.Visible = True
+            Yellow2.Visible = False
+            btnstop2.Enabled = True
+            btnstart2.Enabled = False
+            btnres2.Enabled = False
+            btnend2.Enabled = False
+            lblh2.Text = "00"
+            lblm2.Text = "00"
+            lbls2.Text = "00"
+            lblmnt2.Text = "0"
+            time2 = 0
+            Timer2.Start()
+            somme = somme + s2
+            s2 = 0
+            Label48.Text = somme
+        End If
+    End Sub
+
+    Private Sub btnstart3_Click(sender As Object, e As EventArgs) Handles btnstart3.Click
+        Timer3.Start()
+        Green3.Visible = False
+        Red3.Visible = True
+        Yellow3.Visible = False
+        btncancel3.Enabled = True
+        btnstop3.Enabled = True
+        btnend3.Enabled = False
+        btnres3.Enabled = False
+        btnstart3.Enabled = False
+    End Sub
+
+    Private Sub Timer3_Tick(sender As Object, e As EventArgs) Handles Timer3.Tick
+        time3 = time3 + 1
+        Dim heures As Integer = time3 \ 3600
+        Dim minutes As Integer = (time3 Mod 3600) \ 60
+        Dim secondes As Integer = (time3 Mod 3600) Mod 60
+        lblh3.Text = heures.ToString("00")
+        lblm3.Text = minutes.ToString("00")
+        lbls3.Text = secondes.ToString("00")
+        If lbls3.Text = "01" Then
+            s3 = s3 + 0.15
+            lblmnt3.Text = s3
+        End If
+    End Sub
+
+    Private Sub btnstop3_Click(sender As Object, e As EventArgs) Handles btnstop3.Click
+
+        Timer3.Stop()
+        Yellow3.Visible = True
+        Green3.Visible = False
+        Red3.Visible = False
+        btnres3.Enabled = True
+        btnend3.Enabled = True
+        btnstop3.Enabled = False
+        btnstart3.Enabled = True
+    End Sub
+
+    Private Sub btnres3_Click(sender As Object, e As EventArgs) Handles btnres3.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 3 to restart the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label18, lblmnt3 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label18.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt3.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            Green3.Visible = False
+            Red3.Visible = True
+            Yellow3.Visible = False
+            btnstop3.Enabled = True
+            btnstart3.Enabled = False
+            btnres3.Enabled = False
+            btnend3.Enabled = False
+            lblh3.Text = "00"
+            lblm3.Text = "00"
+            lbls3.Text = "00"
+            lblmnt3.Text = "0"
+            time3 = 0
+            Timer3.Start()
+            somme = somme + s3
+            s3 = 0
+            Label48.Text = somme
+        End If
+    End Sub
+
+    Private Sub btnend3_Click(sender As Object, e As EventArgs) Handles btnend3.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 3 to end the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label18, lblmnt4 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label18.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt3.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            Green3.Visible = True
+            Red3.Visible = False
+            Yellow3.Visible = False
+            btnstart3.Enabled = True
+            btnend3.Enabled = False
+            btnres3.Enabled = False
+            lblh3.Text = "00"
+            lblm3.Text = "00"
+            lbls3.Text = "00"
+            lblmnt3.Text = "0"
+            time3 = 0
+            Timer3.Stop()
+            somme = somme + s3
+            s3 = 0
+            Label48.Text = somme
+        End If
+    End Sub
+
+    Private Sub EmptyingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EmptyingToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub btnstart4_Click(sender As Object, e As EventArgs) Handles btnstart4.Click
+        btncancel4.Enabled = True
+        Timer4.Start()
+        Green4.Visible = False
+        Red4.Visible = True
+        Yellow4.Visible = False
+        btnstop4.Enabled = True
+        btnend4.Enabled = False
+        btnres4.Enabled = False
+        btnstart4.Enabled = False
+    End Sub
+
+    Private Sub btnstop4_Click(sender As Object, e As EventArgs) Handles btnstop4.Click
+        Timer4.Stop()
+        Yellow4.Visible = True
+        Green4.Visible = False
+        Red4.Visible = False
+        btnres4.Enabled = True
+        btnend4.Enabled = True
+        btnstop4.Enabled = False
+        btnstart4.Enabled = True
+    End Sub
+
+    Private Sub btnend4_Click(sender As Object, e As EventArgs) Handles btnend4.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 4 to end the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label11, lblmnt4 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label11.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt4.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            btncancel4.Enabled = False
+            Green4.Visible = True
+            Red4.Visible = False
+            Yellow4.Visible = False
+            btnstart4.Enabled = True
+            btnend4.Enabled = False
+            btnres4.Enabled = False
+            lblh4.Text = "00"
+            lblm4.Text = "00"
+            lbls4.Text = "00"
+            lblmnt4.Text = "0"
+            time4 = 0
+            Timer4.Stop()
+            somme = somme + s4
+            s4 = 0
+            Label48.Text = somme
+        End If
+    End Sub
+
+    Private Sub btnres4_Click(sender As Object, e As EventArgs) Handles btnres4.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you got paid from the table 4 to restart the game ! ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into Games  values(id, Label11, lblmnt4 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label11.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt4.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            Green4.Visible = False
+            Red4.Visible = True
+            Yellow4.Visible = False
+            btnstop4.Enabled = True
+            btnstart4.Enabled = False
+            btnres4.Enabled = False
+            btnend4.Enabled = False
+            lblh4.Text = "00"
+            lblm4.Text = "00"
+            lbls4.Text = "00"
+            lblmnt4.Text = "0"
+            time4 = 0
+            Timer4.Start()
+            somme = somme + s4
+            s4 = 0
+            Label48.Text = somme
+        End If
+    End Sub
+
+    Private Sub Timer4_Tick(sender As Object, e As EventArgs) Handles Timer4.Tick
+        time4 = time4 + 1
+        Dim heures As Integer = time4 \ 3600
+        Dim minutes As Integer = (time4 Mod 3600) \ 60
+        Dim secondes As Integer = (time4 Mod 3600) Mod 60
+        lblh4.Text = heures.ToString("00")
+        lblm4.Text = minutes.ToString("00")
+        lbls4.Text = secondes.ToString("00")
+        If lbls4.Text = "01" Then
+            s4 = s4 + 0.15
+            lblmnt4.Text = s4
+        End If
+    End Sub
+
+    Private Sub Timer5_Tick(sender As Object, e As EventArgs) Handles Timer5.Tick
+        Label8.Text = TimeOfDay
+    End Sub
+
+    Private Sub btncancel4_Click(sender As Object, e As EventArgs) Handles btncancel4.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you want to cancel the game in table 4 ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into CGames  values(id, Label11, lblmnt4 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label11.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt4.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            btncancel4.Enabled = False
+            btnstart4.Enabled = True
+            Red4.Visible = False
+            Yellow4.Visible = False
+            Green4.Visible = True
+            btnstop4.Enabled = False
+            btnres4.Enabled = False
+            btnend4.Enabled = False
+            lblmnt4.Text = 0
+            lbls4.Text = "00"
+            lblm4.Text = "00"
+            lblh4.Text = "00"
+            Timer4.Stop()
+            time4 = 0
+            s4 = 0
+
+        End If
+    End Sub
+
+    Private Sub btncancel3_Click(sender As Object, e As EventArgs) Handles btncancel3.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you want to cancel the game in table 3 ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into CGames  values(id, Label18, lblmnt4 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label18.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt3.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            btncancel3.Enabled = False
+            btnstart3.Enabled = True
+            Red3.Visible = False
+            Yellow3.Visible = False
+            Green3.Visible = True
+            btnstop3.Enabled = False
+            btnres3.Enabled = False
+            btnend3.Enabled = False
+            lblmnt3.Text = 0
+            lbls3.Text = "00"
+            lblm3.Text = "00"
+            lblh3.Text = "00"
+            Timer3.Stop()
+            time3 = 0
+            s3 = 0
+
+        End If
+    End Sub
+
+    Private Sub btncancel1_Click(sender As Object, e As EventArgs) Handles btncancel1.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you want to cancel the game in table 1 ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into CGames  values(id, Label21, lblmnt1 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label21.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt1.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            btncancel1.Enabled = False
+            bntstart1.Enabled = True
+            Red1.Visible = False
+            yeelow1.Visible = False
+            Green1.Visible = True
+            btnstop1.Enabled = False
+            btnres1.Enabled = False
+            btnend1.Enabled = False
+            lblmnt1.Text = 0
+            lbls1.Text = "00"
+            lblm1.Text = "00"
+            lblh1.Text = "00"
+            Timer1.Stop()
+            time1 = 0
+            s1 = 0
+        End If
+    End Sub
+
+    Private Sub btncancel2_Click(sender As Object, e As EventArgs) Handles btncancel2.Click
+        Dim Ask As MsgBoxResult = MsgBox("Are you sure you want to cancel the game in table 2 ", MsgBoxStyle.YesNo, "Alerte")
+        If Ask = MsgBoxResult.Yes Then
+            Dim rd As New Random()
+            Dim id As Integer = rd.Next(0, 900000000)
+            Dim cn As New OleDb.OleDbConnection
+            Dim cmd As New OleDb.OleDbCommand
+            cn.ConnectionString = "Provider =Microsoft.ACE.OLEDB.12.0; data source = " & Application.StartupPath & "\BILL.accdb"
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandText = "Insert into CGames  values(id, Label22, lblmnt2 ,lblutil, Label9, Label8)"
+            cmd.Parameters.AddWithValue("ID", id)
+            cmd.Parameters.AddWithValue("Table", Label22.Text)
+            cmd.Parameters.AddWithValue("Montants", lblmnt2.Text)
+            cmd.Parameters.AddWithValue("Utilisateur", lblutil.Text)
+            cmd.Parameters.AddWithValue("Date", Label9.Text)
+            cmd.Parameters.AddWithValue("Heure", Label8.Text)
+            cmd.ExecuteNonQuery()
+            btncancel2.Enabled = False
+            btnstart2.Enabled = True
+            Red2.Visible = False
+            Yellow2.Visible = False
+            Green2.Visible = True
+            btnstop2.Enabled = False
+            btnres2.Enabled = False
+            btnend2.Enabled = False
+            lblmnt2.Text = 0
+            lbls2.Text = "00"
+            lblm2.Text = "00"
+            lblh2.Text = "00"
+            Timer2.Stop()
+            time2 = 0
+            s2 = 0
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+
+
+    End Sub
+
+    Private Sub SdsdsdsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SdsdsdsToolStripMenuItem.Click
+        Casharchive.Show()
+
+    End Sub
+End Class

@@ -1,0 +1,18 @@
+Public Class Connexion
+    Private Sub btnstop3_Click(sender As Object, e As EventArgs) Handles btnstop3.Click
+        If ComboBox1.Text = "Admin" And TextBox1.Text = "aqwzsxedc123" Then
+            MsgBox("Welcome admin ! ", MsgBoxStyle.Information, "Welcome")
+            Me.Hide()
+            main.Show()
+
+        ElseIf ComboBox1.Text = "User" And TextBox1.Text = "azerty123" Then
+            MsgBox("Welcome user ! ", MsgBoxStyle.Information, "Welcome")
+            Me.Hide()
+            About.Show()
+            main.Show()
+        Else
+            MsgBox("Please verify your information or call the owner ! ", MsgBoxStyle.Critical, "Erreur")
+
+        End If
+    End Sub
+End Class
